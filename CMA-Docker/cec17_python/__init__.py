@@ -29,7 +29,7 @@ wrapper = Wrapper(10, 1)
 
 res = fmin(
 		wrapper.compute, # funkcja minimalizowana
-		[0,0], # początkowe rozwiązanie
+		10 * [0], # początkowe rozwiązanie
 		1, # długość kroku sigma
 		options = {'verbose':-9} # słownik z opcjami algorytmu
 	  )
