@@ -35,7 +35,9 @@ res = fmin(
 		wrapper.compute, # funkcja minimalizowana
 		10 * [0], # początkowe rozwiązanie
 		1, # długość kroku sigma
-		options = {'verbose':-1, 'verb_log': 1, 'verb_filenameprefix': os.path.join(CMADataLogger.default_prefix, "Test_" + str(wrapper.dims), "")} # słownik z opcjami algorytmu
+		options = {'verbose':-1,
+			   'verb_log': 1, 
+			   'verb_filenameprefix': os.path.join(CMADataLogger.default_prefix, "Test_" + str(wrapper.func) + "_" + str(wrapper.dims), "")} # słownik z opcjami algorytmu
 	  )
 
 print("Best solution: %s" % res[0])
