@@ -1,5 +1,6 @@
 from cec17_functions import cec17_test_func
 from cma import *
+import os
 
 class Wrapper:
 	def __init__(self, dims, func):
@@ -27,11 +28,14 @@ print(f[0])
 
 wrapper = Wrapper(10, 1)
 
+print(CMADataLogger.default_prefix)
+print(os.path.join(CMADataLogger.default_prefix, "Test_" + str(wrapper.dims)))
+
 res = fmin(
 		wrapper.compute, # funkcja minimalizowana
 		10 * [0], # początkowe rozwiązanie
 		1, # długość kroku sigma
-		options = {'verbose':-9} # słownik z opcjami algorytmu
+		options = {'verbose':-1, 'verb_log': 1, 'verb_filenameprefix': os.path.join(CMADataLogger.default_prefix, "Test_" + str(wrapper.dims), "")} # słownik z opcjami algorytmu
 	  )
 
 print("Best solution: %s" % res[0])
