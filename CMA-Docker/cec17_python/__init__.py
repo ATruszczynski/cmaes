@@ -28,10 +28,10 @@ print(f[0])
 wrapper = Wrapper(10, 1)
 
 res = fmin(
-		wrapper.compute,
-		[0,0],
-		1, 
-		options = {'verbose':-9}
+		wrapper.compute, # funkcja minimalizowana
+		[0,0], # początkowe rozwiązanie
+		1, # długość kroku sigma
+		options = {'verbose':-9} # słownik z opcjami algorytmu
 	  )
 
 print("Best solution: %s" % res[0])
