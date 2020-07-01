@@ -10,40 +10,43 @@ class Wrapper:
 	
 	def compute(self, arg):
 		f = [0]
-		cec17_test_func(arg, f, self.dims, 10, self.func)
+		cec17_test_func(arg, f, self.dims, 1, self.func)
 		return f[0]
 
 # x: Solution vector
-x = 10*[0]
+#x = 10*[0]
 # nx: Number of dimensions
-nx = 10
+#nx = 10
 # mx: Number of objective functions
-mx = 1
+#mx = 1
 # func_num: Function number
-func_num = 1
+#func_num = 1
 # Pointer for the calculated fitness
-f = [0]
+#f = [0]	
 #print(os.path.abspath('cec17_test_func'))
 #print()
-cec17_test_func(x, f, nx, mx, func_num)
-print(f[0])
+#cec17_test_func(x, f, nx, mx, func_num)
+#print(f[0])
 
-wrapper = Wrapper(10, 1)
+#wrapper = Wrapper(10, 1)
 
-adapt_method = [CMAAdaptSigmaMedianImprovement]#, CMAAdaptSigmaTPA, CMAAdaptSigmaCSA]
-dims = [10]
-funcs = [i for i in range(1, 31) if i not in [2]]
+adapt_method = [CMAAdaptSigmaMedianImprovement, CMAAdaptSigmaTPA, CMAAdaptSigmaCSA]
+dims = [2, 10]#, 30, 50]
+funcs = [i for i in range(1, 10) if i not in [2]]
 sigma = 1
 start_point = [0]
 bounds = [-100, 100]
 verbosity = -1
-verblog = 11
+verblog = 10
 seed = None #!!! Change to 0 or None before tests
+rep = 10 #50
 
-variants = [(a, b, c) for a in adapt_method for b in dims for c in funcs]
+variants = [(a, b, c, d) for a in dims for b in funcs for c in adapt_method for d in range(rep)]
 
 for v in variants:
-    am = v[0]
+    dim = v[0]
+    func = v[1]
+    am = v[2]
     ams = ""
     if(am == CMAAdaptSigmaMedianImprovement):
         ams = "Med"
@@ -51,8 +54,7 @@ for v in variants:
         ams = "TPA"
     if(am == CMAAdaptSigmaCSA):
         ams = "CSA"
-    dim = v[1]
-    func = v[2]
+    rep = v[3]
 
     wrapper = Wrapper(dim, func)
 
@@ -66,7 +68,7 @@ for v in variants:
                             'bounds': [-100, 100],
                             'verbose': verbosity,
                             'verb_log': verblog,
-			                'verb_filenameprefix': os.path.join(CMADataLogger.default_prefix, "Test_" + ams + "_" + str(dim) + "_" + str(func), "") # słownik z opcjami algorytmu
+			    'verb_filenameprefix': os.path.join(CMADataLogger.default_prefix, str(dim), str(func), ams, str(rep), "") # słownik z opcjami algorytmu
                         }
               )
 
