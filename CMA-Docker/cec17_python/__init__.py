@@ -22,7 +22,8 @@ mx = 1
 func_num = 1
 # Pointer for the calculated fitness
 f = [0]
-
+#print(os.path.abspath('cec17_test_func'))
+#print()
 cec17_test_func(x, f, nx, mx, func_num)
 print(f[0])
 
@@ -36,6 +37,8 @@ res = fmin(
 		10 * [0], # początkowe rozwiązanie
 		1, # długość kroku sigma
 		options = {'verbose':-1,
+                'bounds': [10, 100] ,
+                'maxIter': 10,
 			   'verb_log': 1, 
 			   'verb_filenameprefix': os.path.join(CMADataLogger.default_prefix, "Test_" + str(wrapper.func) + "_" + str(wrapper.dims), "")} # słownik z opcjami algorytmu
 	  )
