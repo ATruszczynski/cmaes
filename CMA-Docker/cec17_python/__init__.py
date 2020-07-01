@@ -13,7 +13,7 @@ class Wrapper:
 		return f[0]
 
 # x: Solution vector
-x = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+x = 10*[0]
 # nx: Number of dimensions
 nx = 10
 # mx: Number of objective functions
@@ -31,14 +31,12 @@ wrapper = Wrapper(10, 1)
 
 print(CMADataLogger.default_prefix)
 print(os.path.join(CMADataLogger.default_prefix, "Test_" + str(wrapper.dims)))
-
 res = fmin(
 		wrapper.compute, # funkcja minimalizowana
-		10 * [0], # początkowe rozwiązanie
+		10 * [-100], # początkowe rozwiązanie
 		1, # długość kroku sigma
-		options = {'verbose':-1,
-                'bounds': [10, 100] ,
-                'maxIter': 10,
+		options = {'verbose':-1, # -9 żeby się zamknął
+                'bounds': [-100, 100] , # ograniczenia. Wartości recyklowane, jeśli wyjdziesz za indeks. Początkowe rozwiązanie musi się w nich mieścić, bo inaczej się obrazi
 			   'verb_log': 1, 
 			   'verb_filenameprefix': os.path.join(CMADataLogger.default_prefix, "Test_" + str(wrapper.func) + "_" + str(wrapper.dims), "")} # słownik z opcjami algorytmu
 	  )
