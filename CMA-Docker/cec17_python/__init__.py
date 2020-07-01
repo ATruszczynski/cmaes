@@ -1,5 +1,6 @@
 from cec17_functions import cec17_test_func
 from cma import *
+from cma.sigma_adaptation import *
 import os
 
 class Wrapper:
@@ -29,8 +30,46 @@ print(f[0])
 
 wrapper = Wrapper(10, 1)
 
-print(CMADataLogger.default_prefix)
-print(os.path.join(CMADataLogger.default_prefix, "Test_" + str(wrapper.dims)))
+adapt_method = [CMAAdaptSigmaMedianImprovement, CMAAdaptSigmaTPA, CMAAdaptSigmaCSA]
+dims = [2]
+funcs = [i for i in range(1, 31) if i not in [2]]
+sigma = 1
+start_point = [0]
+bounds = [-100, 100]
+verbosity = -1
+verblog = 11
+
+variants = [(a, b, c) for a in adapt_method for b in dims for c in funcs]
+
+for v in variants:
+    am = v[0]
+    ams = ""
+    if(isinstance(am, CMAAdaptSigmaMedianImprovement)):
+        ams = "Med"
+    if(isinstance(am, CMAAdaptSigmaTPA)):
+        ams = "TPA"
+    if(isinstance(am, CMAAdaptSigmaCSA)):
+        ams = "CSA"
+    dim = v[1]
+    func = v[2]
+
+    wrapper = Wrapper(dim, func)
+
+    res = fmin(
+                wrapper.compute,
+                dim * start_point,
+                sigma,
+                options={
+                            'AdaptSigma': am,
+                            'bounds': [-100, 100],
+                            'verbose': verbosity,
+                            'verb_log': verblog,
+			                'verb_filenameprefix': os.path.join(CMADataLogger.default_prefix, "Test_" + ams + "_" + str(dim) + "_" + str(func), "") # słownik z opcjami algorytmu
+                        }
+              )
+
+
+
 res = fmin(
 		wrapper.compute, # funkcja minimalizowana
 		10 * [-100], # początkowe rozwiązanie
@@ -41,7 +80,5 @@ res = fmin(
 			   'verb_filenameprefix': os.path.join(CMADataLogger.default_prefix, "Test_" + str(wrapper.func) + "_" + str(wrapper.dims), "")} # słownik z opcjami algorytmu
 	  )
 
-print("Best solution: %s" % res[0])
-print("Best value: %s" % res[1])
 
 
