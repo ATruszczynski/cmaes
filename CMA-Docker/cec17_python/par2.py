@@ -4,7 +4,7 @@ from cma import *
 from cma.sigma_adaptation import *
 import os
 from timeit import default_timer as timer
-from joblib import Parallel, delayed
+#from joblib import Parallel, delayed
 import concurrent.futures
 
 
@@ -30,14 +30,15 @@ verblog = 100
 seed = None #!!! Change to 0 or None before tests
 rep = 2 #50
 filesToRemove = [] # tu trzeba uzupełnić to czego nie chcemy
-cns = [1,2,3,4]
+cns = [0,1,2,3,4,5,6,7,8,9]
 
 variant = [[a, b, c, d] for a in dims for b in funcs for c in adapt_method for d in range(rep)]
 
 variants = []
 
-for i in range(len(variant)):
-    variants.append(variant[i] + [(i + 1)%5])
+tasks = [[] for i in cns]
+
+#for 
 
 start = timer()
 print("DESU!")
@@ -54,6 +55,7 @@ def job(v):
         ams = "CSA"
     rep = v[3]
 
+    print(v[4])
     wrapper = Wrapper(dim, func, v[4])
 
     folderName = os.path.join(CMADataLogger.default_prefix, str(dim), str(func), ams, str(rep), "")
