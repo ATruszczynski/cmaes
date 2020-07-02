@@ -27,11 +27,11 @@ bounds = [-100, 100]
 verbosity = -1
 verblog = 100
 seed = None #!!! Change to 0 or None before tests
-rep = 1 #50
-filesToRemove = [] # tu trzeba uzupełnić to czego nie chcemy
+rep = range(50)
+filesToRemove = ["axlen.dat"] # tu trzeba uzupełnić to czego nie chcemy
 max_proc = None
 
-variants = [[a, b, c, d] for a in dims for b in funcs for c in adapt_method for d in range(rep)]
+variants = [[a, b, c, d] for a in dims for b in funcs for c in adapt_method for d in rep]
 
 
 #for t in tasks:
