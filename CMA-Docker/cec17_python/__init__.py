@@ -2,6 +2,7 @@ from cec17_functions import cec17_test_func
 from cma import *
 from cma.sigma_adaptation import *
 import os
+from timeit import default_timer as timer
 
 class Wrapper:
 	def __init__(self, dims, func):
@@ -31,17 +32,20 @@ class Wrapper:
 #wrapper = Wrapper(10, 1)
 
 adapt_method = [CMAAdaptSigmaMedianImprovement, CMAAdaptSigmaTPA, CMAAdaptSigmaCSA]
-dims = [2, 10]#, 30, 50]
-funcs = [i for i in range(1, 10) if i not in [2]]
-sigma = 1
+dims = [10, 30, 50]
+funcs = [i for i in range(1, 31) if i not in [2]]
+sigma = 50 # dokumentacje mówi o 1/4 przedziału w którym spodziewamy się optimum
 start_point = [0]
 bounds = [-100, 100]
 verbosity = -1
-verblog = 10
+verblog = 100
 seed = None #!!! Change to 0 or None before tests
-rep = 10 #50
+rep = 1 #50
+filesToRemove = [] # tu trzeba uzupełnić to czego nie chcemy
 
 variants = [(a, b, c, d) for a in dims for b in funcs for c in adapt_method for d in range(rep)]
+
+start = timer()
 
 for v in variants:
     dim = v[0]
@@ -58,6 +62,8 @@ for v in variants:
 
     wrapper = Wrapper(dim, func)
 
+    folderName = os.path.join(CMADataLogger.default_prefix, str(dim), str(func), ams, str(rep), "")
+
     res = fmin(
                 wrapper.compute,
                 dim * start_point,
@@ -68,10 +74,15 @@ for v in variants:
                             'bounds': [-100, 100],
                             'verbose': verbosity,
                             'verb_log': verblog,
-			    'verb_filenameprefix': os.path.join(CMADataLogger.default_prefix, str(dim), str(func), ams, str(rep), "") # słownik z opcjami algorytmu
-                        }
+			    'verb_filenameprefix': folderName 
+                        } # słownik z opcjami algorytmu
               )
+    for filee in filesToRemove:
+        os.remove(os.path.join(folderName, filee))
 
+end = timer()
+print("\nExecution time:")
+print(end - start)
 
 
 
