@@ -1,9 +1,10 @@
 from ctypes import CDLL, POINTER, c_int, c_double
 import os
 
-def cec17_test_func(x, f, nx, mx, func_num,
-                    dll_path=CDLL(os.path.abspath('cec17_test_func.so'))):
+def cec17_test_func(x, f, nx, mx, func_num, cn
+                    ):
                    # dll_path=CDLL(os.path.abspath('cec17_test_func_x64.dll'))):
+    dll_path=CDLL(os.path.abspath(os.path.join('DLLs','cec17_test_func' + str(cn) + '.so')))
     functions = dll_path
     x_pointer_type = POINTER(c_double * nx)
     f_pointer_type = POINTER(c_double * mx)

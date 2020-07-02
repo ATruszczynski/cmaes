@@ -31,16 +31,16 @@ class Wrapper:
 
 #wrapper = Wrapper(10, 1)
 
-adapt_method = [CMAAdaptSigmaMedianImprovement]#, CMAAdaptSigmaTPA, CMAAdaptSigmaCSA]
+adapt_method = [CMAAdaptSigmaMedianImprovement, CMAAdaptSigmaTPA, CMAAdaptSigmaCSA]
 dims = [2]#, 30, 50]
-funcs = [1]#[i for i in range(1, 31) if i not in [2]]
+funcs = [i for i in range(1, 10) if i not in [2]]
 sigma = 50 # dokumentacje mówi o 1/4 przedziału w którym spodziewamy się optimum
 start_point = [0]
 bounds = [-100, 100]
 verbosity = -1
 verblog = 100
 seed = None #!!! Change to 0 or None before tests
-rep = 1 #50
+rep = 5 #50
 filesToRemove = [] # tu trzeba uzupełnić to czego nie chcemy
 
 variants = [(a, b, c, d) for a in dims for b in funcs for c in adapt_method for d in range(rep)]
