@@ -30,7 +30,7 @@ verblog = 100
 seed = None #!!! Change to 0 or None before tests
 rep = 2 #50
 filesToRemove = [] # tu trzeba uzupełnić to czego nie chcemy
-cns = [0,1,2,3,4]
+cns = [0,0,0,0,0]
 
 variant = [[a, b, c, d] for a in dims for b in funcs for c in adapt_method for d in range(rep)]
 
@@ -50,8 +50,8 @@ while ind < varlen:
         ind = ind + 1
     tasks.append(task)
 
-for t in tasks:
-    print(t)   
+#for t in tasks:
+#    print(t)   
 
 start = timer()
 print("DESU!")
@@ -91,11 +91,11 @@ def job(v):
         os.remove(os.path.join(folderName, filee))
 
 #Parallel(prefer="threads")(delayed(job)(v) for v in variants)
-
-with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
-    for t in tasks:
-        for out1 in executor.map(job, t):
-            der = 2
+if __name__ == '__main__':
+    with concurrent.futures.ProcessPoolExecutor(max_workers=None) as executor:
+        for t in tasks:
+            for out1 in executor.map(job, t):
+                der = 2
 
 #job(variants[0])
 end = timer()
