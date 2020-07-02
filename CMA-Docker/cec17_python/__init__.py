@@ -31,9 +31,9 @@ class Wrapper:
 
 #wrapper = Wrapper(10, 1)
 
-adapt_method = [CMAAdaptSigmaMedianImprovement, CMAAdaptSigmaTPA, CMAAdaptSigmaCSA]
-dims = [10, 30, 50]
-funcs = [i for i in range(1, 31) if i not in [2]]
+adapt_method = [CMAAdaptSigmaMedianImprovement]#, CMAAdaptSigmaTPA, CMAAdaptSigmaCSA]
+dims = [2]#, 30, 50]
+funcs = [1]#[i for i in range(1, 31) if i not in [2]]
 sigma = 50 # dokumentacje mówi o 1/4 przedziału w którym spodziewamy się optimum
 start_point = [0]
 bounds = [-100, 100]
