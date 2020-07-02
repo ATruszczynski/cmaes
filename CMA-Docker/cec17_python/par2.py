@@ -12,7 +12,7 @@ class Wrapper:
 	def __init__(self, dims, func, cn):
 		self.dims = dims	
 		self.func = func
-		self.cn = 1
+		self.cn = cn
 	
 	def compute(self, arg):
 		f = [0]
@@ -25,20 +25,33 @@ funcs = [i for i in range(1, 10) if i not in [2]]
 sigma = 50 # dokumentacje mówi o 1/4 przedziału w którym spodziewamy się optimum
 start_point = [0]
 bounds = [-100, 100]
-verbosity = -1
+verbosity = -9
 verblog = 100
 seed = None #!!! Change to 0 or None before tests
 rep = 2 #50
 filesToRemove = [] # tu trzeba uzupełnić to czego nie chcemy
-cns = [0,1,2,3,4,5,6,7,8,9]
+cns = [0,1,2,3,4]
 
 variant = [[a, b, c, d] for a in dims for b in funcs for c in adapt_method for d in range(rep)]
 
 variants = []
 
-tasks = [[] for i in cns]
+tasks = []
 
-#for 
+varlen = len(variant)
+ind = 0
+indt = 0
+cnlen = len(cns)
+
+while ind < varlen:
+    task = []
+    while ind < varlen and len(task) < cnlen:
+        task.append(variant[ind] + [len(task)])
+        ind = ind + 1
+    tasks.append(task)
+
+for t in tasks:
+    print(t)   
 
 start = timer()
 print("DESU!")
@@ -79,9 +92,10 @@ def job(v):
 
 #Parallel(prefer="threads")(delayed(job)(v) for v in variants)
 
-with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-    for out1 in executor.map(job, variants):
-        der = 2
+with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+    for t in tasks:
+        for out1 in executor.map(job, t):
+            der = 2
 
 #job(variants[0])
 end = timer()
