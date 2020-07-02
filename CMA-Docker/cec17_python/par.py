@@ -12,7 +12,7 @@ class Wrapper:
 	
 	def compute(self, arg):
 		f = [0]
-		cec17_test_func(arg, f, self.dims, 1, self.func)
+		cec17_test_func(arg, f, self.dims, 1, self.func, 1)
 		return f[0]
 
 adapt_method = [CMAAdaptSigmaMedianImprovement, CMAAdaptSigmaTPA, CMAAdaptSigmaCSA]
@@ -24,7 +24,7 @@ bounds = [-100, 100]
 verbosity = -1
 verblog = 100
 seed = None #!!! Change to 0 or None before tests
-rep = 5 #50
+rep = 2 #50
 filesToRemove = [] # tu trzeba uzupełnić to czego nie chcemy
 
 variants = [(a, b, c, d) for a in dims for b in funcs for c in adapt_method for d in range(rep)]

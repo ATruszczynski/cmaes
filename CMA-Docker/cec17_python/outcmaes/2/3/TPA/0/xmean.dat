@@ -1,4 +1,5 @@
-% # columns="iteration, evaluation, void, void, void, xmean", seed=779478, Thu Jul  2 13:45:57 2020, <python>{}</python> # scaling_of_variables: 1, typical_x: 0
-1 6 0 0 0 -48.3886839181312 -5.433097955716452
-2 12 0 0 0 -92.02569670310866 -32.46876350078662
-3 18 0 0 0 -80.46481816278359 -4.607920720009872
+% # columns="iteration, evaluation, void, void, void, xmean", seed=749111, Thu Jul  2 14:50:13 2020, <python>{}</python> # scaling_of_variables: 1, typical_x: 0
+1 6 0 0 0 -45.56493488919382 -2.549592711467941
+2 12 0 0 0 -53.275990844293915 7.4642387839086055
+3 18 0 0 0 -76.03224710184332 -13.195065701324864
+80 480 0 0 0 -55.93832669081935 4.54306542245527

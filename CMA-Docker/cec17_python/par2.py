@@ -19,7 +19,7 @@ class Wrapper:
 		cec17_test_func(arg, f, self.dims, 1, self.func, self.cn)
 		return f[0]
 
-adapt_method = [CMAAdaptSigmaMedianImprovement]#, CMAAdaptSigmaTPA, CMAAdaptSigmaCSA]
+adapt_method = [CMAAdaptSigmaMedianImprovement, CMAAdaptSigmaTPA, CMAAdaptSigmaCSA]
 dims = [2]#, 30, 50]
 funcs = [i for i in range(1, 10) if i not in [2]]
 sigma = 50 # dokumentacje mówi o 1/4 przedziału w którym spodziewamy się optimum
@@ -28,13 +28,16 @@ bounds = [-100, 100]
 verbosity = -1
 verblog = 100
 seed = None #!!! Change to 0 or None before tests
-rep = 10 #50
+rep = 2 #50
 filesToRemove = [] # tu trzeba uzupełnić to czego nie chcemy
 cns = [1,2,3,4]
 
 variant = [[a, b, c, d] for a in dims for b in funcs for c in adapt_method for d in range(rep)]
 
-variants = [v + [i] for v in variant for i in cns]
+variants = []
+
+for i in range(len(variant)):
+    variants.append(variant[i] + [(i + 1)%5])
 
 start = timer()
 print("DESU!")
@@ -74,7 +77,7 @@ def job(v):
 
 #Parallel(prefer="threads")(delayed(job)(v) for v in variants)
 
-with concurrent.futures.ProcessPoolExecutor(max_workers=3) as executor:
+with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
     for out1 in executor.map(job, variants):
         der = 2
 
