@@ -27,8 +27,8 @@ bounds = [-100, 100]
 verbosity = -1
 verblog = 100
 seed = None #!!! Change to 0 or None before tests
-rep = range(50)
-filesToRemove = ["axlen.dat"] # tu trzeba uzupełnić to czego nie chcemy
+rep = range(50) # tu zmienić na swój zakres
+filesToRemove = ["axlen.dat", "axlencorr.dat", "axlenprec.dat", "stddev.dat"] # tu trzeba uzupełnić to czego nie chcemy
 max_proc = None
 
 variants = [[a, b, c, d] for a in dims for b in funcs for c in adapt_method for d in rep]
