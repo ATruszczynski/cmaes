@@ -38,7 +38,6 @@ variants = [[a, b, c, d] for a in dims for b in funcs for c in adapt_method for 
 #    print(t)   
 
 start = timer()
-print("DESU!")
 def job(v):
     dim = v[0]
     func = v[1]
@@ -61,14 +60,13 @@ def job(v):
                 dim * start_point,
                 sigma,
                 options={
-			    'seed': rep, #probably will generate the same starting pop for each adptation method
-                'maxfevals':  dim * 1e4, #maximum function evaluations
-                'AdaptSigma': am,
-                'bounds': bounds,
-                'verbose': verbosity,
-                'verb_log': verblog,
-			    'verb_filenameprefix': folderName,
-                } # słownik z opcjami algorytmu
+			    'seed': seed,
+                            'AdaptSigma': am,
+                            'bounds': bounds,
+                            'verbose': verbosity,
+                            'verb_log': verblog,
+			    'verb_filenameprefix': folderName 
+                        } # słownik z opcjami algorytmu
               )
     for filee in filesToRemove:
         os.remove(os.path.join(folderName, filee))
